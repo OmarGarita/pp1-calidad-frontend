@@ -1,0 +1,40 @@
+<template>
+  <Header></Header>
+  <VMain>
+    
+    <h1>Nuestros modulos</h1>
+    <VContainer>
+      <VRow>
+        <VCol>
+          <ModuleOption titulo="Estudiantes" subtitulo="Gestiona información de estudiantes" icono="src/assets/modestudiante.svg" btntitle="Acceder" href="/modules/student"/>
+        </VCol>
+        <VCol>
+          <ModuleOption titulo="Citas" subtitulo="Reserva y administra tus citas de consulta" icono="src/assets/modcitas.svg" btntitle="Reservar" href="/modules/schedules" />
+        </VCol>
+      </VRow>
+      <VRow>
+        <VCol>
+          <ModuleOption titulo="Profesores" subtitulo="Gestiona información de profesores" icono="src/assets/modprofesor.svg" btntitle="Acceder" href="/modules/professor"/>
+        </VCol>
+        <VCol>
+          <ModuleOption titulo="Cursos" subtitulo="Explora los cursos y sus horarios de consulta" icono="src/assets/modcursos.svg" btntitle="Ver cursos" href="/modules/course"/>
+        </VCol>
+      </VRow>
+      
+    </VContainer>
+    
+    
+  </VMain>
+</template>
+
+<script setup>
+import Header from '@/common/Header.vue';
+import ModuleOption from '@/common/ModuleOption.vue';
+</script>
+
+<style scoped>
+h1{
+  text-align: center;
+}
+
+</style>
