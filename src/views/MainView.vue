@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import Header from '@/common/Header.vue';
+import Header from '@/views/Header.vue';
 import ModuleOption from '@/common/ModuleOption.vue';
 </script>
 
