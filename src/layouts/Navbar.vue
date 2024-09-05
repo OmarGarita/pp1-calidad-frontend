@@ -2,7 +2,7 @@
   <VAppBar class="navbar">
     
     <VAppBarTitle> 
-      <a href="/"><VIcon icon="mdi-school-outline"></VIcon> ConsulTEC</a>
+      <a href="/"><VIcon icon="mdi-school-outline"></VIcon> ConsultaTEC</a>
     </VAppBarTitle>
 
     

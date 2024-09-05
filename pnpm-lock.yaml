@@ -11,6 +11,9 @@ importers:
       pinia:
         specifier: ^2.1.7
         version: 2.2.2(vue@3.4.38)
+      sweetalert2:
+        specifier: ^11.13.2
+        version: 11.13.2
       vue:
         specifier: ^3.4.29
         version: 3.4.38
@@ -809,6 +812,9 @@ packages:
 
   strip-literal@2.1.0:
     resolution: {integrity: sha512-Op+UycaUt/8FbN/Z2TWPBLge3jWrP3xj10f3fnYxf052bKuS3EKs1ZQcVGjnEMdsNVAM+plXRdmjrZ/KgG3Skw==}
+
+  sweetalert2@11.13.2:
+    resolution: {integrity: sha512-Q361QVJrDce3pA+46m2JmfDQyxxlmVE6t7ScoMwubm2PQKTlUqaMpzWq/DZRSPL8Sg2hUCzUAXQ9dwMPnbsy7Q==}
 
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
@@ -1736,6 +1742,8 @@ snapshots:
   strip-literal@2.1.0:
     dependencies:
       js-tokens: 9.0.0
+
+  sweetalert2@11.13.2: {}
 
   symbol-tree@3.2.4: {}
 

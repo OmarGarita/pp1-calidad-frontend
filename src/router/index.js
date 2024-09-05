@@ -17,7 +17,22 @@ const router = createRouter({
       path: '/modules/student',
       name: 'student-module',
       component: () => import('../modules/estudiante/views/StudentView.vue')
-    }
+    },
+    {
+      path:'/modules/student/register',
+      name: 'add-student',
+      component: ()=> import('../modules/estudiante/views/AddStudentView.vue')
+    },
+    {
+      path:'/modules/professor',
+      name: 'professor-module',
+      component: ()=> import('../modules/profesor/views/ProfessorView.vue')
+    },
+    {
+      path:'/modules/professor/register',
+      name: 'add-professor',
+      component: ()=> import('../modules/profesor/views/AddProfessor.vue')
+    },
     
   ]
 })

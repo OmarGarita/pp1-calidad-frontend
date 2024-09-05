@@ -4,7 +4,7 @@
       <VImg :width="90" :src="icono"></VImg>
       <h2>{{ nombreModulo }}</h2>
       <p >{{ subtitulo }}</p>
-      <VBtn  class="ma-4 pr-0"  color="grey-lighten-3" variant="flat"><a class="text-subtitle-1" :href="ruta">{{ boton }}</a></VBtn>
+      <VBtn @click="navegar" class="ma-4"  color="grey-lighten-3 text-subtitle-1" variant="flat">{{ boton }}</VBtn>
 
       
     </div>
@@ -13,13 +13,16 @@
 
 <script setup>
 import { defineProps, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const props = defineProps(["titulo", "subtitulo", "icono", "btntitle", "href"]);
 
 const nombreModulo = ref(props.titulo);
 const subtitulo = ref(props.subtitulo);
 const icono = ref(props.icono);
 const boton = ref(props.btntitle);
-const ruta = ref(props.href)
+const ruta = ref(props.href);
 
 watch(() => props.titulo, (newValue) =>{
   nombreModulo.value = newValue
@@ -40,16 +43,11 @@ watch(() => props.href, (newValue) =>{
   ruta.value = newValue
 });
 
-
+const navegar = () =>{
+  router.push({name:ruta.value})
+}
 </script>
 
 <style scoped>
-a:link, a:visited, a:active {
-  text-decoration:none;
-}
 
-a{
-  color: black;
-  margin-right: 20px;
-} 
 </style>
