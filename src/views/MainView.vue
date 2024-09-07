@@ -9,7 +9,7 @@
           <ModuleOption titulo="Estudiantes" subtitulo="Gestiona información de estudiantes" icono="src/assets/modestudiante.svg" btntitle="Acceder" href="student-module"/>
         </VCol>
         <VCol>
-          <ModuleOption titulo="Citas" subtitulo="Reserva y administra tus citas de consulta" icono="src/assets/modcitas.svg" btntitle="Reservar" href="schedule-module" />
+          <ModuleOption titulo="Citas" subtitulo="Reserva y administra tus citas de consulta" icono="src/assets/modcitas.svg" btntitle="Reservar" href="appointments-module" />
         </VCol>
       </VRow>
       <VRow>

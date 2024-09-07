@@ -14,6 +14,17 @@ const router = createRouter({
       component: () => import('../views/MainView.vue')
     },
     {
+      path:'/modules/appointments',
+      name: 'appointments-module',
+      component: ()=> import('../modules/cita/views/AppointmentsView.vue')
+    },
+
+    {
+      path:'/modules/course',
+      name: 'course-module',
+      component: ()=> import('../modules/curso/views/CoursesView.vue')
+    },
+    {
       path: '/modules/student',
       name: 'student-module',
       component: () => import('../modules/estudiante/views/StudentView.vue')
@@ -22,6 +33,11 @@ const router = createRouter({
       path:'/modules/student/register',
       name: 'add-student',
       component: ()=> import('../modules/estudiante/views/AddStudentView.vue')
+    },
+    {
+      path:'/modules/student/courses/verification',
+      name: 'student-course-validation',
+      component: ()=> import('../modules/estudiante/views/StudentCoursesVerification.vue')
     },
     {
       path:'/modules/professor',

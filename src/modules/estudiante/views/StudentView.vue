@@ -9,7 +9,10 @@
            
         </VCol>
         <VCol>
-          <ModuleOption titulo="Consultar mis cursos" subtitulo="Consulta tus cursos asignados" icono="/src/assets/consultarcursos.svg" btntitle="Consultar" href="add-student" />
+          <ModuleOption titulo="Gestionar mis cursos" subtitulo="Consulta tus cursos asignados" icono="/src/assets/consultarcursos.svg" btntitle="Consultar" href="student-course-validation" />
+        </VCol>
+        <VCol>
+          <ModuleOption titulo="Reportes" subtitulo="Genera reportes sobre estudiantes" icono="/src/assets/student-reports.svg" btntitle="Consultar" href="add-student" />
         </VCol>
       </VRow>
         

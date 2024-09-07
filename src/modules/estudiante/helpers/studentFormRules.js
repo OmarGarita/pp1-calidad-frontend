@@ -20,4 +20,14 @@ export const studentFormRules ={
     },
   ],
 
+  sede: [
+    (value) => {
+      if (value){
+        return true
+      } 
+
+      return 'Debe ingresar una sede'
+    },
+  ],
+
 }

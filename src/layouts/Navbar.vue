@@ -7,7 +7,7 @@
 
     
     <a href="/modules/student">Estudiantes</a>
-    <a href="/modules/schedules">Citas</a>
+    <a href="/modules/appointments">Citas</a>
     <a href="/modules/professor">Profesores</a>
     <a href="/modules/course">Cursos</a>
 

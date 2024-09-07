@@ -11,26 +11,13 @@
           :rules="studentFormRules.id"
           label="Carné"
     ></VTextField>
-    <VSelect
-      v-model="cursosActuales"
-      :items="cursos"
-      label="Cursos Actuales"
-      multiple
-      clearable
-      prepend-icon="mdi-book-open-variant"
-    >
-      <template v-slot:selection="{ item, index }">
-        <VChip v-if="index < 4">
-          <span>{{ item.title }}</span>
-        </VChip>
-        <span
-          v-if="index === 4"
-          class="text-grey text-caption align-self-center"
-        >
-          (+{{ cursosActuales.length - 4}} cursos más)
-        </span>
-      </template>
-    </VSelect>
+
+    <VTextField
+          v-model="sede"
+          :rules="studentFormRules.sede"
+          label="Sede"
+    ></VTextField>
+    
     <VBtn color="#40A578" type="submit"> <p class="text-subtitle-1">Registrar</p></VBtn>
   </VForm>
 </VSheet>
@@ -39,19 +26,21 @@
 <script setup>
 import { ref } from 'vue';
 import {studentFormRules} from '../helpers/studentFormRules.js';
+import Alerta from '@/helpers/Alerta';
 
 const formRef = ref(null)
 
+//Atributos del estudiante
 const nombre = ref("");
 const carne= ref("");
-const cursosActuales = ref([])
+const sede = ref("")
 
-const cursos = ['ejemplo', 'Prueba', 'prueba1', 'prueba2', 'prueba3', 'prueba4']
 
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid){
-    alert(nombre.value + " " + carne.value + " " + cursosActuales.value);
+    const texto = nombre.value + " " + carne.value + " " + sede.value
+    Alerta.showExitoSimple(texto)
   }
 }
 

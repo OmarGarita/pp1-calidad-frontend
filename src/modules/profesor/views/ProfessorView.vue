@@ -9,7 +9,10 @@
            
         </VCol>
         <VCol>
-          <ModuleOption titulo="Gestionar estudiantes" subtitulo="Gestiona las estrellas de tus estudiantes" icono="/src/assets/consultarcursos.svg" btntitle="Consultar" href="add-student" />
+          <ModuleOption titulo="Gestionar estudiantes" subtitulo="Gestiona las estrellas de tus estudiantes" icono="/src/assets/student-star.svg" btntitle="Consultar" href="add-student" />
+        </VCol>
+        <VCol>
+          <ModuleOption titulo="Reportes" subtitulo="Genera reportes sobre profesores" icono="/src/assets/professor-reports.svg" btntitle="Consultar" href="add-student" />
         </VCol>
       </VRow>
     </VContainer>
