@@ -63,6 +63,9 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['update:model', 'close-dialog']);
+
+
+//TODO: Lista de cursos para que el estudiante
 const cursosItems = ['prueba', 'prueba2'] //Cursos de prueba
 
 const dialog = ref(props.model)
