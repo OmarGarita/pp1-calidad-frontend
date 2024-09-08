@@ -3,43 +3,46 @@
     <VForm ref="formRef" @submit.prevent="onSubmit">
       <h6 class="text-h6">Ingrese su número de carné:</h6>
       <VTextField
-            v-model="carne"
-            :rules="studentFormRules.id"
-            label="Carné"
-            type="number"
+        v-model="carne"
+        :rules="studentFormRules.id"
+        label="Carné"
+        type="number"
+        class="custom-text-field"
       ></VTextField>
-      <VBtn color="#40A578" type="submit"> <p class="text-subtitle-1">Ingresar</p></VBtn>
+      <VBtn color="#40A578" type="submit">
+        <p class="text-subtitle-1">Ingresar</p>
+      </VBtn>
     </VForm>
   </VSheet>
 </template>
-  
+
 <script setup>
-import { ref } from 'vue';
-import {studentFormRules} from '../helpers/studentFormRules.js';
-import {useCarneStore} from '../stores/carneStore.js'
-import { useRouter } from 'vue-router';
- 
+import { ref } from "vue";
+import { studentFormRules } from "../helpers/studentFormRules.js";
+import { useStudentStore } from '../stores/student';
+import { useRouter } from "vue-router";
+import Alerta from "@/helpers/Alerta.js";
+
 const router = useRouter();
-const formRef = ref(null)
-const carneStore = useCarneStore();
+const formRef = ref(null);
+const carne = ref("");
+const studentStore = useStudentStore();
 
-const carne= ref("");
-
-
-const onSubmit = async () =>{
-  const {valid} = await formRef.value.validate();
-  if(valid){
-    
-    carneStore.guardarCarne(carne)
-    router.push({name:"student-courses"})
-    
+const onSubmit = async () => {
+  const { valid } = await formRef.value.validate();
+  if (valid) {
+    try {
+      await studentStore.fetchStudentById(carne.value);
+      router.push({ name: "student-courses" });
+    } catch (error) {
+      Alerta.showError("No se encontró un estudiante con ese carné");
+    }
   }
-}
-
+};
 </script>
 
 <style scoped>
-p{
+p {
   color: white;
 }
 </style>
