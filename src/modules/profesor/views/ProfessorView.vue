@@ -9,10 +9,7 @@
            
         </VCol>
         <VCol>
-          <ModuleOption titulo="Gestionar estudiantes" subtitulo="Gestiona las estrellas de tus estudiantes" icono="/src/assets/student-star.svg" btntitle="Consultar" href="add-student" />
-        </VCol>
-        <VCol>
-          <ModuleOption titulo="Reportes" subtitulo="Genera reportes sobre profesores" icono="/src/assets/professor-reports.svg" btntitle="Consultar" href="add-student" />
+          <ModuleOption titulo="Asignar horario" subtitulo="Gestiona tus horas de consulta" icono="/src/assets/professor-schedule.svg" btntitle="Consultar" href="professor-schedule-validation" />
         </VCol>
       </VRow>
     </VContainer>
@@ -23,7 +20,6 @@
 <script setup>
 import ProfessorHeader from '../components/ProfessorHeader.vue';
 import ModuleOption from '@/common/ModuleOption.vue';
-
 
 </script>
 

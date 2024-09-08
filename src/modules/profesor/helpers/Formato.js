@@ -1,5 +1,4 @@
 
-
 export const compararHoras = (hora1,hora2) =>{
   
   const [h1, m1] = hora1.split(':').map(Number);

@@ -15,9 +15,10 @@
   
 <script setup>
 import { ref } from 'vue';
-import {studentFormRules} from '../helpers/studentFormRules.js';
+import {studentFormRules} from '@/modules/estudiante/helpers/studentFormRules.js';
 import {useCarneStore} from '../stores/carneStore.js'
 import { useRouter } from 'vue-router';
+import Alerta from '@/helpers/Alerta';
  
 const router = useRouter();
 const formRef = ref(null)
@@ -31,7 +32,10 @@ const onSubmit = async () =>{
   if(valid){
     
     carneStore.guardarCarne(carne)
-    router.push({name:"student-courses"})
+
+    Alerta.showExitoSimple(carneStore.carne.value)
+    
+    //router.push({name:"appointment-select"})
     
   }
 }

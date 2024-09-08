@@ -1,12 +1,11 @@
 <template>
   <VSheet class="mx-auto" width="300">
     <VForm ref="formRef" @submit.prevent="onSubmit">
-      <h6 class="text-h6">Ingrese su número de carné:</h6>
+      <h6 class="text-h6">Ingrese el codigo del curso:</h6>
       <VTextField
-            v-model="carne"
-            :rules="studentFormRules.id"
-            label="Carné"
-            type="number"
+            v-model="codigo"
+            :rules="courseFormRules.codigo"
+            label="Codigo"
       ></VTextField>
       <VBtn color="#40A578" type="submit"> <p class="text-subtitle-1">Ingresar</p></VBtn>
     </VForm>
@@ -15,24 +14,24 @@
   
 <script setup>
 import { ref } from 'vue';
-import {studentFormRules} from '../helpers/studentFormRules.js';
-import {useCarneStore} from '../stores/carneStore.js'
+import {courseFormRules} from '../helpers/courseFormRules.js';
+import {useCodigoStore} from '../stores/codigoCursoStore.js'
 import { useRouter } from 'vue-router';
  
 const router = useRouter();
 const formRef = ref(null)
-const carneStore = useCarneStore();
+const codigoStore = useCodigoStore();
 
-const carne= ref("");
+const codigo= ref("");
+
+
 
 
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid){
-    
-    carneStore.guardarCarne(carne)
-    router.push({name:"student-courses"})
-    
+    codigoStore.guardarCodigo(codigo)
+    router.push({name:"course-semester-end"})
   }
 }
 

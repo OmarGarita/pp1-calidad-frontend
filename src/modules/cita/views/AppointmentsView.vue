@@ -5,11 +5,11 @@
     <VContainer>
       <VRow>
         <VCol>
-          <ModuleOption titulo="Agendar cita" subtitulo="Agenda una cita para un curso" icono="/src/assets/add-appointment.svg" btntitle="Agendar" href="add-course" />
+          <ModuleOption titulo="Agendar cita" subtitulo="Agenda una cita para un curso" icono="/src/assets/add-appointment.svg" btntitle="Agendar" href="appointments-select-verification" />
            
         </VCol>
         <VCol>
-          <ModuleOption titulo="Reportes" subtitulo="Genera reportes sobre tus citas" icono="/src/assets/schedule-reports.svg" btntitle="Consultar" href="add-student" />
+          <ModuleOption titulo="Reportes" subtitulo="Genera reportes sobre tus citas" icono="/src/assets/schedule-reports.svg" btntitle="Consultar" href="appointment-reports" />
         </VCol>
         
       </VRow>

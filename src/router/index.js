@@ -18,12 +18,43 @@ const router = createRouter({
       name: 'appointments-module',
       component: ()=> import('../modules/cita/views/AppointmentsView.vue')
     },
+    {
+      path:'/modules/appointments/select/verification',
+      name: 'appointments-select-verification',
+      component: ()=> import('../modules/cita/views/AppointmentsValidation.vue')
+    },
 
     {
       path:'/modules/course',
       name: 'course-module',
       component: ()=> import('../modules/curso/views/CoursesView.vue')
     },
+    {
+      path:'/modules/course/add',
+      name: 'add-course',
+      component: ()=> import('../modules/curso/views/AddCourseView.vue')
+    },
+    {
+      path:'/modules/course/validation',
+      name: 'course-semester-end-validation',
+      component: ()=> import('../modules/curso/views/CourseValidationView.vue'),
+    },
+    {
+      path:'/modules/course/semester-end',
+      name: 'course-semester-end',
+      component: ()=> import('../modules/curso/views/EditSemesterEndView.vue'),
+    },
+    {
+      path:'/modules/course/professor/validation',
+      name: 'course-professor-validation',
+      component: ()=> import('../modules/curso/views/CourseValidationProfessor.vue'),
+    },
+    {
+      path:'/modules/course/professor',
+      name: 'course-professor',
+      component: ()=> import('../modules/curso/views/CourseAddProfessorView.vue'),
+    },
+
     {
       path: '/modules/student',
       name: 'student-module',
@@ -40,6 +71,11 @@ const router = createRouter({
       component: ()=> import('../modules/estudiante/views/StudentCoursesVerification.vue')
     },
     {
+      path:'/modules/student/courses',
+      name: 'student-courses',
+      component: ()=> import('../modules/estudiante/views/StudentCoursesView.vue')
+    },
+    {
       path:'/modules/professor',
       name: 'professor-module',
       component: ()=> import('../modules/profesor/views/ProfessorView.vue')
@@ -49,6 +85,18 @@ const router = createRouter({
       name: 'add-professor',
       component: ()=> import('../modules/profesor/views/AddProfessor.vue')
     },
+    {
+      path:'/modules/professor/schedule/validation',
+      name: 'professor-schedule-validation',
+      component: ()=> import('../modules/profesor/views/ProfessorValidation.vue')
+    },
+    
+    {
+      path:'/modules/professor/schedule',
+      name: 'professor-schedule',
+      component: ()=> import('../modules/profesor/views/ProfessorScheduleView.vue')
+    },
+    
     
   ]
 })

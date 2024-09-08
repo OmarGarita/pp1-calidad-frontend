@@ -22,6 +22,14 @@ class Alerta {
       timer: 1500
     })
   }
+
+  showError(mensaje){
+    Swal.fire({
+      title: "Error",
+      text: mensaje,
+      icon: "error"
+    });
+  }
 }
 
 export default new Alerta()

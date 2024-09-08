@@ -10,6 +10,7 @@
           v-model="carne"
           :rules="studentFormRules.id"
           label="Carné"
+          type="number"
     ></VTextField>
 
     <VTextField

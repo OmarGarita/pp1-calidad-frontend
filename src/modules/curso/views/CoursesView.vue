@@ -9,10 +9,19 @@
            
         </VCol>
         <VCol>
-          <ModuleOption titulo="Reportes" subtitulo="Genera reportes sobre tus cursos" icono="/src/assets/course-report.svg" btntitle="Consultar" href="add-student" />
+          <ModuleOption titulo="Modificar fin de semestre" subtitulo="Modifica la fecha de fin de semestre" icono="/src/assets/semester-end.svg" btntitle="Editar" href="course-semester-end-validation"/>
         </VCol>
         
       </VRow>
+      <VRow>
+        <VCol>
+          <ModuleOption titulo="Asignar Profesor" subtitulo="Asigna profesores a cursos" icono="/src/assets/course-professor.svg" btntitle="Asignar" href="course-professor-validation" />
+        </VCol>
+        <VCol>
+          <ModuleOption titulo="Reportes" subtitulo="Genera reportes sobre tus cursos" icono="/src/assets/course-report.svg" btntitle="Consultar" href="course-reports" />
+        </VCol>
+      </VRow>
+      
     </VContainer>
   </VMain>
 

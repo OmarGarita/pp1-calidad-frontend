@@ -15,6 +15,7 @@ export const studentFormRules ={
       if (value){
         return true
       } 
+      
 
       return 'Debe ingresar un carné'
     },
@@ -29,5 +30,14 @@ export const studentFormRules ={
       return 'Debe ingresar una sede'
     },
   ],
+  repetidos: [
+    (value) => {
+      if (value >=0){
+        return true
+      } 
 
+      return 'Debe ingresar un valor válido'
+    },
+  ],
+  
 }
