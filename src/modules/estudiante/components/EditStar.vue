@@ -85,6 +85,8 @@ const closeDialog = () => {
 
 const onAdd = () => {
 
+  //TODO: Asignar las estrellas de un curso a estudiante
+
   dialog.value = false;
   emit('close-dialog');
   

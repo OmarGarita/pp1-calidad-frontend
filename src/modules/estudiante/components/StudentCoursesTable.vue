@@ -44,6 +44,8 @@ import EditStarVue from './EditStar.vue';
 
 const dialog = ref(false)
 
+//TODO: obtener una lista con todos los cursos de un estudiante para mostrarlos en la tabla
+
 //Cursos de ejemplo 
 const items = [{
   codigo: 'TI000',

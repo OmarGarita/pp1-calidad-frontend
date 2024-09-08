@@ -105,6 +105,9 @@
   const onSubmit = async () =>{
     const {valid} = await formRef.value.validate();
     if(valid ){
+      
+      //TODO
+
       const texto = nombreStore.nombre.value + " " + diaConsulta.value + " " + horaInicio.value + " " + horaFin.value + " " + cantCitas.value
       Alerta.showExitoSimple(texto)
     }

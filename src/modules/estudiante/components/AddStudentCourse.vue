@@ -87,6 +87,8 @@ const closeDialog = () => {
 const onAdd = () => {
   if(repetidos.value >= 0 && curso.value != ""){
     
+
+    //TODO
     //Aqui va la logica para guardar el curso
 
     

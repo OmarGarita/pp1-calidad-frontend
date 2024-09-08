@@ -27,6 +27,9 @@ const nombre = ref("");
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid ){
+
+    //TODO
+
     const texto = nombre.value;
     Alerta.showExitoSimple(texto)
   }

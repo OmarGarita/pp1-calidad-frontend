@@ -65,6 +65,11 @@
     if(valid ){
       const fechaInicioFormateada = formatearFecha(fechaInicio.value);
       const fechaFinFormateada = formatearFecha(fechaFin.value);
+
+
+      //TODO
+
+      
       const texto = nombre.value + " " + codigo.value + " " + fechaInicioFormateada + " " + fechaFinFormateada 
       Alerta.showExitoSimple(texto)
     }

@@ -29,6 +29,8 @@ const nombre= ref("");
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid){
+
+    //TODO
     
     nombreStore.guardarNombre(nombre)
     router.push({name:"professor-schedule"})

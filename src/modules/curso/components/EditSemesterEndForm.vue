@@ -31,6 +31,11 @@
     const {valid} = await formRef.value.validate();
     if(valid ){
       const fechaFinFormateada = formatearFecha(fechaFin.value);
+
+      
+      //TODO
+
+
       const texto = fechaFinFormateada + " " + codigoStore.codigo.value
       Alerta.showExitoSimple(texto)
     }

@@ -40,7 +40,10 @@ const sede = ref("")
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid){
-    const texto = nombre.value + " " + carne.value + " " + sede.value
+
+    //TODO
+    
+    const texto = nombre.value + " " + carne.value + " " + sede.value 
     Alerta.showExitoSimple(texto)
   }
 }
