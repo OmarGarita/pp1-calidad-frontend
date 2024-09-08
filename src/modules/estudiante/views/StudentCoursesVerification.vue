@@ -15,7 +15,6 @@ const router = useRouter();
 
 const regresar = ()=>{
   router.go(-1)
-  
 }
 
 </script>
