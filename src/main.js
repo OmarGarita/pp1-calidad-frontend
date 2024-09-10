@@ -5,7 +5,6 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-
 // Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
@@ -33,7 +32,6 @@ const vuetify = createVuetify({
     }
   }
 })
-
 
 app.use(createPinia())
 app.use(router)
