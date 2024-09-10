@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 
-export const useCarneStore = defineStore("carne", ()=>{
+export const useCitaStore = defineStore("carne", ()=>{
   const carne = ref("");
   
   const guardarCarne = (pCarne) =>{

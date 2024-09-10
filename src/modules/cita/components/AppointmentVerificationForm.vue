@@ -16,13 +16,13 @@
 <script setup>
 import { ref } from 'vue';
 import {studentFormRules} from '@/modules/estudiante/helpers/studentFormRules.js';
-import {useCarneStore} from '../stores/carneStore.js'
+import {useCitaStore} from '../stores/citaStore.js'
 import { useRouter } from 'vue-router';
 import Alerta from '@/helpers/Alerta';
  
 const router = useRouter();
 const formRef = ref(null)
-const carneStore = useCarneStore();
+const citaStore = useCitaStore();
 
 const carne= ref("");
 
@@ -31,11 +31,12 @@ const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid){
     
-    carneStore.guardarCarne(carne)
+    //cambiar por student store
+    citaStore.guardarCarne(carne)
 
-    Alerta.showExitoSimple(carneStore.carne.value)
+    Alerta.showExitoSimple(citaStore.carne.value)
     
-    //router.push({name:"appointment-select"})
+    router.push({name:"appointment-select"})
     
   }
 }

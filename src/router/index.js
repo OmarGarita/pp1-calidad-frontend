@@ -19,9 +19,19 @@ const router = createRouter({
       component: ()=> import('../modules/cita/views/AppointmentsView.vue')
     },
     {
+      path:'/modules/appointments/reports',
+      name: 'appointment-reports',
+      component: ()=> import('../modules/cita/views/AppointmentReportsView.vue')
+    },
+    {
       path:'/modules/appointments/select/verification',
       name: 'appointments-select-verification',
       component: ()=> import('../modules/cita/views/AppointmentsValidation.vue')
+    },
+    {
+      path:'/modules/appointments/select',
+      name: 'appointment-select',
+      component: ()=> import('../modules/cita/views/AppointmentSelectView.vue')
     },
 
     {
@@ -54,7 +64,11 @@ const router = createRouter({
       name: 'course-professor',
       component: ()=> import('../modules/curso/views/CourseAddProfessorView.vue'),
     },
-
+    {
+      path:'/modules/course/reports',
+      name: 'course-reports',
+      component: ()=> import('../modules/curso/views/CourseReportsView.vue')
+    },
     {
       path: '/modules/student',
       name: 'student-module',
@@ -74,6 +88,11 @@ const router = createRouter({
       path:'/modules/student/courses',
       name: 'student-courses',
       component: ()=> import('../modules/estudiante/views/StudentCoursesView.vue')
+    },
+    {
+      path:'/modules/student/reports',
+      name: 'student-reports',
+      component: ()=> import('../modules/estudiante/views/StudentReportsView.vue')
     },
     {
       path:'/modules/professor',

@@ -23,11 +23,27 @@ class Alerta {
     })
   }
 
+  showExito(texto){
+    Swal.fire({
+      icon: "success",
+      title: "Exito",
+      text: texto
+    })
+  }
+
   showError(mensaje){
     Swal.fire({
       title: "Error",
       text: mensaje,
       icon: "error"
+    });
+  }
+
+  showWarning(titulo, mensaje){
+    Swal.fire({
+      title: titulo,
+      text: mensaje,
+      icon: "warning"
     });
   }
 }
