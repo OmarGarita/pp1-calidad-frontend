@@ -104,6 +104,8 @@ const horaFinRules=  [
 
 
 
+
+
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid ){
@@ -122,8 +124,6 @@ const onSubmit = async () =>{
       Alerta.showError("")
     }
       
-      
-
   }
 }
 

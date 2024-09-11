@@ -36,15 +36,17 @@
                         {{ schedule.dayOfWeek }}: {{ formatTime(schedule.startTime) }} - {{ formatTime(schedule.endTime) }}
                       </VChip>
                     </div>
-                    <!-- Botón para seleccionar cita -->
-                    <VBtn @click="abrirDialogo(profesor)" color="success">
-                      Solicitar Cita
-                    </VBtn>
+                    
                   </VExpansionPanelText>
 
                   
                 </VExpansionPanel>
+                
               </VExpansionPanels>
+              <!-- Botón para seleccionar cita -->
+              <VBtn @click="abrirDialogo(curso)" class="mt-4" color="success">
+                      Solicitar Cita
+                    </VBtn>
             </VCardText>
           </VCard>
         </VExpansionPanelText>
@@ -86,7 +88,7 @@ const citaStore = useAppointmentStore();
 // Variables reactivas
 const cursos = ref([]);
 const dialog = ref(false);
-const profesorSeleccionado = ref(null);
+const cursoSeleccionado = ref(null);
 const citaActual = ref({});
 let indiceCita = 0
 
@@ -208,14 +210,14 @@ const formatTime = (time) => {
 };
 
 // Abrir el diálogo con la primera cita disponible
-const abrirDialogo = (profesor) => {
+const abrirDialogo = (curso) => {
   
 
   //ejemplo con la lista de prueba
-  profesorSeleccionado.value = profesor;
+  cursoSeleccionado.value = curso;
   indiceCita = 0;
-  if (profesor.schedules && profesor.schedules.length > 0) {
-    citaActual.value = profesor.schedules[indiceCita];
+  if (curso.schedules && curso.schedules.length > 0) {
+    citaActual.value = curso.professors[0].schedules[indiceCita];
     dialog.value = true;
   } else {
     Alerta.showWarning("Citas agotadas","No hay citas disponibles.");

@@ -108,7 +108,7 @@ const aplicarFiltros = async  () => {
   try{
     await studentStore.getStudentReports(filtros.value)
   } catch(error){
-    Alerta.showError("Reportes no encontrados :(")
+    console.log("No hay reportes")
   }
 };
 
@@ -124,7 +124,7 @@ const onReset = async  () => {
   try{
     await studentStore.getStudentReports(filtros.value)
   } catch(error){
-    Alerta.showError("")
+    console.log("No hay reportes")
   }
 };
 

@@ -4,6 +4,7 @@ import axiosClient from "@/axiosClient";
 
 export const useProfesorStore = defineStore("professor", () => {
   const professor = ref("");
+  const professors = ref([]);
   
   function saveProfessor(pProfessor) {
     professor.value = pProfessor;
@@ -17,23 +18,21 @@ export const useProfesorStore = defineStore("professor", () => {
   }
 
   // Obtener un profesor por ID
-  async function fetchProfessorByName(nombre) {
-    const response = await axiosClient.get("/professors");
+  async function fetchProfessorById(professorId) {
+    const response = await axiosClient.get(`/professors/${professorId}`);
     
-    const index = response.data.findIndex((item) => item.name === nombre);
-    if(index != -1){
-      professor.value = response.data[index];
-      return professor.value;
-    }
-    else{
+    if(response.data.length === 0 ){
       throw new Error("Professor not found");
     }
+    professor.value = response.data;
+    return professor.value;
   }
 
   // Añadir un horario de consulta a un profesor
   async function addConsultationSchedule(addScheduleReq) {
-    console.log(addScheduleReq)
+    console.log(professor.value.id)
     const response = await axiosClient.post(`/professors/${professor.value.id}/schedules`, addScheduleReq);
+    console.log(response)
     const createdSchedule = response.data;
         
     if (response.status <400) {
@@ -44,9 +43,10 @@ export const useProfesorStore = defineStore("professor", () => {
 
   return {
     professor,
+    professors,
     saveProfessor,
     fetchProfessors,
-    fetchProfessorByName,
+    fetchProfessorById,
     addConsultationSchedule,
   };
 });
