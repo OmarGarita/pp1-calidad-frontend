@@ -39,6 +39,7 @@
   import { ref  } from 'vue';
   import {courseFormRules} from '../helpers/courseFormRules.js';
   import {formatearFecha} from '../helpers/formato.js'
+  import axiosClient from "@/axiosClient.js";
   import Alerta from '@/helpers/Alerta';
   
   const formRef = ref(null)
@@ -67,11 +68,23 @@
       const fechaFinFormateada = formatearFecha(fechaFin.value);
 
 
-      //TODO
+      const data = {
+        semester: {
+          startDate: fechaInicioFormateada,
+          endDate: fechaFinFormateada
+        },
+        courseCode: codigo.value,
+        courseName: nombre.value
+      };
 
+      try{
+        await axiosClient.post("/courses", data);
+        
+        Alerta.showExitoSimple("Se ha registrado el curso")
+      } catch (error) {
+      Alerta.showError("Error al registrar el curso");
+      }
       
-      const texto = nombre.value + " " + codigo.value + " " + fechaInicioFormateada + " " + fechaFinFormateada 
-      Alerta.showExitoSimple(texto)
     }
   }
   

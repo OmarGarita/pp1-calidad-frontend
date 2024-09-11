@@ -4,13 +4,28 @@ import axiosClient from "@/axiosClient";
 
 export const useStudentStore = defineStore("student", () => {
   const student = ref("");
+  const enrrollments = ref([]);
+  const reports = ref([]);
 
   function saveStudent(pStudent) {
     student.value = pStudent;
   }
 
-  function getStudentEnrollments() {
-    return student.value.enrollments;
+  async function getStudentEnrollments() {
+    const response = await axiosClient.get(`/students/${student.value.id}/enrollments`);
+    if(response.status < 400){
+      enrrollments.value = response.data;
+      return enrrollments.value;
+    }
+    
+  }
+
+  async function addEnrrollment(data){
+    const response = await axiosClient.post(`/students/${student.value.id}/enrollments`, data);
+    if(response.status >= 400){
+      throw new Error("Student not found");
+    }
+    
   }
 
   async function fetchStudentById(studentId) {
@@ -24,6 +39,17 @@ export const useStudentStore = defineStore("student", () => {
     }
     student.value = response.data[0];
     return student.value;
+  }
+
+  async function getStudentReports(filtros) {
+    const response = await axiosClient.get("/students/results", {
+      params: filtros,
+    });
+    if (response.data.length === 0) {
+      throw new Error("Reports not found");
+    }
+    reports.value = response.data;
+    return reports.value;
   }
 
   async function updateStudentStarRating(enrollmentId, starRating) {
@@ -41,9 +67,13 @@ export const useStudentStore = defineStore("student", () => {
 
   return {
     student,
+    enrrollments,
+    reports,
     saveStudent,
     getStudentEnrollments,
+    addEnrrollment,
     fetchStudentById,
+    getStudentReports,
     updateStudentStarRating,
   };
 });

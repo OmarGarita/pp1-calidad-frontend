@@ -80,6 +80,7 @@ const closeDialog = () => {
 const onAdd = async () => {
   try {
     await studentStore.updateStudentStarRating(cursoCodigo.value, estrellas.value);
+    await studentStore.getStudentEnrollments();
     Alerta.showExitoSimple("Estrellas asignadas correctamente");
   } catch (error) {
     Alerta.showError("Error al asignar estrellas");

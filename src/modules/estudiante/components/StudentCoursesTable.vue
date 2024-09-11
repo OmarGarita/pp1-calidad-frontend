@@ -21,7 +21,7 @@
     </thead>
     <tbody>
       <tr 
-        v-for="item in student.enrollments"
+        v-for="item in enrollments"
         :key="item.id"
       >
         <td class="text-center">{{ item.course.code }}</td>
@@ -29,10 +29,10 @@
         <td class="text-center">{{ item.attemptCount }}</td>
         <td class="text-center">{{ item.starRating }}</td>
         <td class="text-center">
-          <VBtn @click="dialog = true" color="#40A578" density="comfortable" icon="mdi-pencil-outline"></VBtn> 
-          <EditStarVue 
+          <VBtn @click="openEditDialog(item.id)" color="#40A578" density="comfortable" icon="mdi-pencil-outline"></VBtn> 
+          <EditStar
           :model="dialog" 
-          :codigoCurso="item.id" 
+          :codigoCurso="selectedCursoId" 
           @close-dialog="dialog = false" />
         </td>
       </tr>
@@ -41,14 +41,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import EditStarVue from './EditStar.vue';
+import { ref, watch} from 'vue';
+import EditStar from './EditStar.vue';
 import { useStudentStore } from '../stores/student';
+import { onMounted } from "vue";
 
+const selectedCursoId = ref(""); 
 const dialog = ref(false)
 const studentStore = useStudentStore();
-const student = studentStore.student;
+const enrollments = ref(studentStore.enrrollments)
 
+
+watch(()=>studentStore.enrrollments, (newValue)=>{
+  enrollments.value = newValue;
+})
+
+
+onMounted(() =>{
+  studentStore.getStudentEnrollments()
+})
+
+const openEditDialog = (id) => {
+  selectedCursoId.value = id;  // Establecer el ID del curso seleccionado
+  dialog.value = true;         // Abrir el diálogo
+};
 </script>
 
 <style>

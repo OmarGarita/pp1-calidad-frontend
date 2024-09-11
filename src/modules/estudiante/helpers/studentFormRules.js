@@ -32,7 +32,7 @@ export const studentFormRules ={
   ],
   repetidos: [
     (value) => {
-      if (value >=0){
+      if (value >0){
         return true
       } 
 

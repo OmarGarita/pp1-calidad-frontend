@@ -5,7 +5,7 @@
       <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.carne"
+            v-model="filtros.idCard"
             label="Carné"
             outlined
             type="number"
@@ -13,7 +13,7 @@
         </VCol>
         <VCol>
           <VTextField
-            v-model="filtros.curso"
+            v-model="filtros.courseName"
             label="Curso"
             outlined
           ></VTextField>
@@ -22,15 +22,15 @@
       <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.vezRepetido"
-            label="Veces repetido"
+            v-model="filtros.attemptCount"
+            label="Número de intentos"
             outlined
             type="number"
           ></VTextField>
         </VCol>
         <VCol>
           <VSelect
-            v-model="filtros.estrellas"
+            v-model="filtros.starRating"
             :items="estrellasDisponibles"
             label="Estrellas"
             outlined
@@ -41,32 +41,34 @@
       <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.sede"
+            v-model="filtros.campus"
             label="Sede"
             outlined
           ></VTextField>
         </VCol>
       </VRow>
       <VBtn type="submit" color="primary">Aplicar Filtros</VBtn>
+      <VBtn @click="onReset" class="ma-2" color="primary">Limpiar Filtros</VBtn>
     </VForm>
 
     <!-- Lista expandible de estudiantes -->
     <VExpansionPanels class="mt-4">
-      <VExpansionPanel v-for="(reporte, index) in reportesFiltrados" :key="index">
+      <VExpansionPanel v-for="(reporte, index) in reportes" :key="index">
         <!-- Título del estudiante -->
         <VExpansionPanelTitle>
-          {{ reporte.nombre }} - Carné: {{ reporte.carne }} - Sede: {{ reporte.sede }}
+           Carné: {{ reporte.idCard }} - Nombre: {{ reporte.name }} - Sede: {{ reporte.campus }}
         </VExpansionPanelTitle>
           
         <!-- Cursos del estudiante al expandir -->
         <VExpansionPanelText>
-          <VRow>
-            <VCol v-for="(curso, indexCurso) in reporte.cursos" :key="indexCurso">
+          <VRow v-for="(cursoRow, rowIndex) in groupedEnrollments(reporte.enrollments)" :key="rowIndex">
+            <!-- Iterar dentro de cada fila para mostrar 3 cursos -->
+            <VCol v-for="(curso, indexCurso) in cursoRow" :key="indexCurso" cols="4">
               <VCard outlined class="mb-4">
-                <VCardTitle>{{ curso.nombreCurso }}</VCardTitle>
+                <VCardTitle>{{ curso.course.name }}</VCardTitle>
                 <VCardText>
-                  Veces Repetido: {{ curso.vecesRepetido }}<br>
-                  Estrellas Asignadas: {{ curso.estrellas }}
+                  Número de intentos: {{ curso.attemptCount }}<br>
+                  Estrellas Asignadas: {{ curso.starRating }}
                 </VCardText>
               </VCard>
             </VCol>
@@ -79,60 +81,71 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref , onMounted, watch} from 'vue';
+import { useStudentStore } from '../stores/student';
+import Alerta from '@/helpers/Alerta';
+
+const studentStore = useStudentStore();
 
 // Variables reactivas para los filtros
 const filtros = ref({
-  carne: '',
-  curso: null,
-  vezRepetido: null,
-  estrellas: null,
-  sede: null,
+  idCard: null,
+  courseName: null,
+  attemptCount: null,
+  starRating: null,
+  campus: null,
 });
 
 const estrellasDisponibles = ref([1, 2, 3]);
 
 
 // Reportes originales de los estudiantes con los cursos (simulado)
-const reportes = ref([
-  {
-    nombre: 'Juan Pérez',
-    carne: '123456',
-    sede: 'Central',
-    cursos: [
-      { nombreCurso: 'Matemáticas', vecesRepetido: 1, estrellas: 2 },
-      { nombreCurso: 'Física', vecesRepetido: 0, estrellas: 3 },
-    ]
-  },
-  {
-    nombre: 'Ana López',
-    carne: '654321',
-    sede: 'Regional',
-    cursos: [
-      { nombreCurso: 'Programación', vecesRepetido: 2, estrellas: 1 },
-      { nombreCurso: 'Física', vecesRepetido: 1, estrellas: 2 },
-    ]
-  }
-]);
+const reportes = ref(studentStore.reports);
 
-// Reportes filtrados según los filtros aplicados
-const reportesFiltrados = ref([...reportes.value]);
 
 // Aplicar filtros a los reportes
-const aplicarFiltros = () => {
-  reportesFiltrados.value = reportes.value.filter((reporte) => {
-    return (
-      (!filtros.value.carne || reporte.carne.includes(filtros.value.carne)) &&
-      (!filtros.value.sede || reporte.sede === filtros.value.sede) &&
-      reporte.cursos.some(curso => (
-        (!filtros.value.curso || curso.nombreCurso === filtros.value.curso) &&
-        (!filtros.value.vezRepetido || curso.vecesRepetido === filtros.value.vezRepetido) &&
-        (!filtros.value.estrellas || curso.estrellas === filtros.value.estrellas)
-      ))
-    );
-  });
+const aplicarFiltros = async  () => {
+  try{
+    await studentStore.getStudentReports(filtros.value)
+  } catch(error){
+    Alerta.showError("Reportes no encontrados :(")
+  }
 };
 
+const onReset = async  () => {
+  filtros.value = {
+    idCard: null,
+    courseName: null,
+    attemptCount: null,
+    starRating: null,
+    campus: null,
+  }
+
+  try{
+    await studentStore.getStudentReports(filtros.value)
+  } catch(error){
+    Alerta.showError("")
+  }
+};
+
+const groupedEnrollments = (enrollments) => {
+  const chunkSize = 3;
+  const groups = [];
+  for (let i = 0; i < enrollments.length; i += chunkSize) {
+    groups.push(enrollments.slice(i, i + chunkSize));  // Agrupamos de a 3
+  }
+  return groups;
+};
+
+watch(()=>studentStore.reports, (newValue) =>{
+  
+  reportes.value = newValue;
+  
+})
+
+onMounted(()=>{
+  studentStore.getStudentReports(filtros.value)
+})
 
 </script>
 

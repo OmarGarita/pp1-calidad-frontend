@@ -51,8 +51,8 @@ const onSubmit = async () => {
 
     try {
       await axiosClient.post("/students", data);
-      const texto = nombre.value + " " + carne.value + " " + sede.value;
-      Alerta.showExitoSimple(texto);
+      
+      Alerta.showExitoSimple("Estudiante registrado");
     } catch (error) {
       Alerta.showError("Error al registrar el estudiante");
     }

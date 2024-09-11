@@ -5,7 +5,7 @@
         <VRow>
           <VSelect
             v-model="curso"
-            :items="cursosItems"
+            :items="formattedCourses"
             label="Cursos"
             clearable
             chips
@@ -15,7 +15,7 @@
           <VTextField
             v-model="repetidos"
             :rules="studentFormRules.repetidos"
-            label="Cantidad de veces llevado"
+            label="Número de intento"
             type="number"
           ></VTextField>
         </VRow>
@@ -39,11 +39,17 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch, defineEmits } from "vue";
+import { defineProps, ref, watch, defineEmits, computed } from "vue";
 import { studentFormRules } from "../helpers/studentFormRules.js";
 import { useStudentStore } from '../stores/student';
+import { useCourseStore } from "@/modules/curso/stores/course";
+import { onMounted } from "vue";
+import axiosClient from "@/axiosClient.js";
+import Alerta from "@/helpers/Alerta";
+
 
 const studentStore = useStudentStore();
+const courseStore = useCourseStore();
 
 const props = defineProps({
   model: {
@@ -53,12 +59,17 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:model", "close-dialog"]);
 
-//TODO: Lista de cursos para el estudiante
-const cursosItems = ["prueba", "prueba2"]; //Cursos de prueba
-
 const dialog = ref(props.model);
-const curso = ref(cursosItems[0]);
-const repetidos = ref(0);
+const curso = ref("");
+const repetidos = ref(1);
+
+
+const formattedCourses = computed(() => {
+  return courseStore.courses.map((course) => ({
+    title: course.name,
+    value: course.id   
+  }));
+});
 
 watch(
   () => props.model,
@@ -76,15 +87,29 @@ const closeDialog = () => {
   emit("close-dialog");
 };
 
-const onAdd = () => {
+const onAdd = async () => {
   if (repetidos.value >= 0 && curso.value != "") {
-    //TODO
-    //Aqui va la logica para guardar el curso
+    
+    const data = {
+      courseId: curso.value,
+      attemptCount: repetidos.value
+    }
 
+    try{
+      await studentStore.addEnrrollment(data)
+      await studentStore.getStudentEnrollments()
+      Alerta.showExitoSimple(`Se agregó el curso a ${studentStore.student.name}`)
+    } catch (error) {
+      Alerta.showError("Error al agregar curso");
+    }
     dialog.value = false;
     emit("close-dialog");
   }
 };
+
+onMounted(() =>{
+  courseStore.fetchCourses()
+})
 </script>
 
 <style scoped></style>

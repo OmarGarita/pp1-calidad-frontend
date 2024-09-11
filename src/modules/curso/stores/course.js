@@ -3,7 +3,8 @@ import { ref } from "vue";
 import axiosClient from "@/axiosClient";
 
 export const useCourseStore = defineStore("course", () => {
-  const professor = ref("");
+  const course = ref("");
+  const courses = ref([])
 
   function saveCourse(pCourse) {
     course.value = pCourse;
@@ -11,12 +12,17 @@ export const useCourseStore = defineStore("course", () => {
 
   // Obtener todos los cursos
   async function fetchCourses() {
+    try {
       const response = await axiosClient.get("/courses");
-      courses.value = response.data;
+      courses.value = response.data
+      
       return courses.value;
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
   }
 
-    // Obtener un curso por ID
+  // Obtener un curso por ID
   async function fetchCourseById(courseId) {
       const response = await axiosClient.get(`/courses/${courseId}`);
       if (!response.data) {
@@ -50,6 +56,7 @@ export const useCourseStore = defineStore("course", () => {
 
   return {
     course,
+    courses,
     saveCourse,
     fetchCourses,
     fetchCourseById,
