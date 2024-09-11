@@ -16,11 +16,13 @@
 <script setup>
 import { ref  } from 'vue';
 import Alerta from '@/helpers/Alerta';
-import {useCodigoStore} from '../stores/codigoCursoStore.js'
+import { useCourseStore } from '../stores/course.js';
+import { useProfesorStore } from '@/modules/profesor/stores/profesor';
 import {courseFormRules} from '../helpers/courseFormRules.js'
 
 const formRef = ref(null)
-const codigoStore = useCodigoStore();
+const courseStore = useCourseStore();
+const profesorStore = useProfesorStore();
 
 //Atributos del estudiante
 const nombre = ref("");
@@ -28,13 +30,20 @@ const nombre = ref("");
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid ){  
+    try{
+      await profesorStore.fetchProfessorByName(nombre.value);
+      const data = {
+        professorId: profesorStore.professor.id
+      }
 
+      await courseStore.addProfessorToCourse(data)
+      Alerta.showExitoSimple(`Profesor asignado al curso ${courseStore.course.name}`)
 
-    //TODO
+      nombre.value = '';
+    } catch(error){
+      Alerta.showError("No se encontro al profesor")
+    }
 
-
-    const texto = nombre.value + " " + codigoStore.codigo.value
-    Alerta.showExitoSimple(texto)
   }
 }
 

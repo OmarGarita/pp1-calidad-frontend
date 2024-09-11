@@ -5,14 +5,14 @@
       <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.curso"
+            v-model="filtros.courseName"
             label="Curso"
             outlined
           ></VTextField>
         </VCol>
         <VCol>
           <VTextField
-            v-model="filtros.profesor"
+            v-model="filtros.professorName"
             label="Profesor"
             outlined
           ></VTextField>
@@ -21,15 +21,15 @@
       <VRow>
         <VCol>
           <VSelect
-            v-model="filtros.diaConsulta"
-            :items="diasDisponibles"
+            v-model="filtros.consultationDay"
+            :items="items.dias"
             label="Día de Consulta"
             outlined
           ></VSelect>
         </VCol>
         <VCol>
           <VTextField
-            v-model="filtros.citasTotales"
+            v-model="filtros.totalAppointments"
             label="Citas Totales"
             outlined
             type="number"
@@ -39,7 +39,7 @@
       <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.citasReservadas"
+            v-model="filtros.acceptedAppointments"
             label="Citas Reservadas"
             outlined
             type="number"
@@ -47,42 +47,54 @@
         </VCol>
         <VCol>
           <VTextField
-            v-model="filtros.citasNoReservadas"
-            label="Citas No Reservadas"
+            v-model="filtros.availableAppointments"
+            label="Citas Disponibles"
             outlined
             type="number"
           ></VTextField>
         </VCol>
       </VRow>
       <VBtn type="submit" color="primary">Aplicar Filtros</VBtn>
+      <VBtn @click="onReset" class="ma-2" color="primary">Limpiar Filtros</VBtn>
     </VForm>
 
     <!-- Lista expandible de cursos -->
     <VExpansionPanels class="mt-4">
-      <VExpansionPanel v-for="(curso, index) in reportesFiltrados" :key="index">
+      <VExpansionPanel v-for="(curso, index) in reportes" :key="index">
         <!-- Título del curso -->
         <VExpansionPanelTitle>
-          {{ curso.codigo }} - {{ curso.nombre }}
-          <VChip class="ml-2" color="green" outlined>Inicio: {{ curso.fechaInicio }}</VChip>
-          <VChip class="ml-2" color="red" outlined>Fin: {{ curso.fechaFin }}</VChip>
+          Codigo: {{ curso.code }} - Nombre: {{ curso.name }}
+          <VChip class="ml-2" color="green" outlined>Inicio: {{ curso.semester.startDate }}</VChip>
+          <VChip class="ml-2" color="red" outlined>Fin: {{ curso.semester.endDate }}</VChip>
         </VExpansionPanelTitle>
 
         <!-- Profesores y días de consulta al expandir -->
         <VExpansionPanelText>
-          <VRow>
-            <VCol v-for="(profesor, indexProfesor) in curso.profesores" :key="indexProfesor">
-              <VCard outlined class="mb-4">
-                <VCardTitle>{{ profesor.nombre }}</VCardTitle>
+          <VRow  v-for="(profesorRow, rowIndex) in groupedProfessors( curso.professors)" :key="rowIndex">
+            <VCol v-for="(profesor, indexProfesor) in profesorRow" :key="indexProfesor">
+              <VCard outlined class="mb-2">
+                <VCardTitle>{{ profesor.name }}</VCardTitle>
                 <VCardText>
-                  <div v-for="(dia, indexDia) in profesor.diasConsulta" :key="indexDia">
-                    <strong>{{ dia.diaSemana }}:</strong> {{ dia.horaInicio }} - {{ dia.horaFin }}
+                  <h3>Días de consulta:</h3>
+                  <div v-for="(dia, indexDia) in profesor.schedules" :key="indexDia">
+                    <strong>{{ traducirDia(dia.dayOfWeek) }}:</strong> {{ dia.startTime }} - {{ dia.endTime }}
                   </div>
-                  <div class="mt-2">
-                    Citas Totales: {{ profesor.citasTotales }}<br>
-                    Citas Reservadas: {{ profesor.citasReservadas }}<br>
-                    Citas No Reservadas: {{ profesor.citasNoReservadas }}
-                  </div>
+                  
                 </VCardText>
+              </VCard>
+            </VCol>
+          </VRow>
+          <VRow>
+            <VCol>
+              <VCard outlined class="mb-4">
+                <VCardTitle>Cantidad de Citas</VCardTitle>
+                <VCardText>
+                  <div class="mt-2">
+                    <strong>Citas Totales: </strong> {{ curso.totalAppointments }}<br>
+                    <strong>Citas Reservadas: </strong> {{ curso.acceptedAppointments }}<br>
+                    <strong>Citas Disponibles: </strong>{{ curso.availableAppointments }}
+                  </div>
+                </VCardText>  
               </VCard>
             </VCol>
           </VRow>
@@ -93,90 +105,72 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref ,onMounted, watch} from 'vue';
+import { items } from '../helpers/courseItems';
+import { useCourseStore } from '../stores/course';
+import {traducirDia} from '../helpers/formato.js'
+import Alerta from '@/helpers/Alerta';
+
+const courseStore = useCourseStore();
 
 // Variables reactivas para los filtros
 const filtros = ref({
-  curso: null,
-  profesor: null,
-  diaConsulta: null,
-  citasTotales: null,
-  citasReservadas: null,
-  citasNoReservadas: null,
+  courseName: null,
+  professorName: null,
+  consultationDay: null,
+  totalAppointments: null,
+  acceptedAppointments: null,
+  availableAppointments: null,
 });
 
-const diasDisponibles = ref(['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes']);
+const reportes = ref(courseStore.reports);
 
-// Reportes originales de los cursos y profesores (simulado)
-const reportes = ref([
-  {
-    codigo: 'CS101',
-    nombre: 'Programación Avanzada',
-    fechaInicio: '2024-09-01',
-    fechaFin: '2024-12-15',
-    profesores: [
-      {
-        nombre: 'Dr. Juan Pérez',
-        diasConsulta: [
-          { diaSemana: 'Lunes', horaInicio: '10:00', horaFin: '11:00' },
-          { diaSemana: 'Miércoles', horaInicio: '14:00', horaFin: '15:00' }
-        ],
-        citasTotales: 20,
-        citasReservadas: 10,
-        citasNoReservadas: 10
-      },
-      {
-        nombre: 'Dra. María García',
-        diasConsulta: [
-          { diaSemana: 'Martes', horaInicio: '12:00', horaFin: '13:00' },
-          { diaSemana: 'Jueves', horaInicio: '09:00', horaFin: '10:00' }
-        ],
-        citasTotales: 15,
-        citasReservadas: 5,
-        citasNoReservadas: 10
-      }
-    ]
-  },
-  {
-    codigo: 'CS102',
-    nombre: 'Estructura de Datos',
-    fechaInicio: '2024-09-01',
-    fechaFin: '2024-12-15',
-    profesores: [
-      {
-        nombre: 'Dr. Carlos López',
-        diasConsulta: [
-          { diaSemana: 'Lunes', horaInicio: '09:00', horaFin: '10:00' },
-          { diaSemana: 'Viernes', horaInicio: '11:00', horaFin: '12:00' }
-        ],
-        citasTotales: 25,
-        citasReservadas: 15,
-        citasNoReservadas: 10
-      }
-    ]
-  }
-]);
 
-// Reportes filtrados según los filtros aplicados
-const reportesFiltrados = ref([...reportes.value]);
 
 // Aplicar filtros a los reportes
-const aplicarFiltros = () => {
-  reportesFiltrados.value = reportes.value.filter((curso) => {
-    return (
-      (!filtros.value.curso || curso.codigo === filtros.value.curso) &&
-      curso.profesores.some(profesor => (
-        (!filtros.value.profesor || profesor.nombre === filtros.value.profesor) &&
-        profesor.diasConsulta.some(dia => (
-          (!filtros.value.diaConsulta || dia.diaSemana === filtros.value.diaConsulta)
-        )) &&
-        (!filtros.value.citasTotales || profesor.citasTotales === parseInt(filtros.value.citasTotales)) &&
-        (!filtros.value.citasReservadas || profesor.citasReservadas === parseInt(filtros.value.citasReservadas)) &&
-        (!filtros.value.citasNoReservadas || profesor.citasNoReservadas === parseInt(filtros.value.citasNoReservadas))
-      ))
-    );
-  });
+const aplicarFiltros = async () => {
+  try{
+    await courseStore.getCourseReports(filtros.value)
+  } catch(error){
+    Alerta.showError("Reportes no encontrados :(")
+  }
 };
+
+const onReset = async  () => {
+  filtros.value = {
+    idCard: null,
+    courseName: null,
+    attemptCount: null,
+    starRating: null,
+    campus: null,
+  }
+
+  try{
+    await courseStore.getCourseReports(filtros.value)
+  } catch(error){
+    Alerta.showError("")
+  }
+};
+
+const groupedProfessors = (professors) => {
+  const chunkSize = 2;
+  const groups = [];
+  for (let i = 0; i < professors.length; i += chunkSize) {
+    groups.push(professors.slice(i, i + chunkSize));  // Agrupamos de a 3
+  }
+  return groups;
+};
+
+watch(()=>courseStore.reports, (newValue) =>{
+  
+  reportes.value = newValue;
+  
+})
+
+onMounted(()=>{
+  courseStore.getCourseReports(filtros.value)
+})
+
 </script>
 
 <style scoped>

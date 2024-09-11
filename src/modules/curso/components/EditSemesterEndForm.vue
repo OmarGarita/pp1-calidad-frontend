@@ -14,37 +14,42 @@
   </VSheet>
   </template>
   
-  <script setup>
-  import { ref  } from 'vue';
-  import {formatearFecha} from '../helpers/formato.js'
-  import Alerta from '@/helpers/Alerta';
-  import {useCodigoStore} from '../stores/codigoCursoStore.js'
-  
-  const formRef = ref(null)
-  const codigoStore = useCodigoStore();
-  
-  //Atributos del estudiante
-  const fechaFin = ref(null);
+<script setup>
+import { ref  } from 'vue';
+import {formatearFecha} from '../helpers/formato.js'
+import Alerta from '@/helpers/Alerta';
+import { useCourseStore } from '../stores/course.js';
 
-  
-  const onSubmit = async () =>{
-    const {valid} = await formRef.value.validate();
-    if(valid ){
-      const fechaFinFormateada = formatearFecha(fechaFin.value);
+const formRef = ref(null)
+const courseStore = useCourseStore();
 
-      
-      //TODO
+//Atributos del estudiante
+const fechaFin = ref(null);
 
 
-      const texto = fechaFinFormateada + " " + codigoStore.codigo.value
-      Alerta.showExitoSimple(texto)
+const onSubmit = async () =>{
+  const {valid} = await formRef.value.validate();
+  if(valid ){
+    const fechaFinFormateada = formatearFecha(fechaFin.value);
+
+    const data = {
+      endDate: fechaFinFormateada
     }
+
+    try {
+      await courseStore.updateCourseEndSemester(data)
+      Alerta.showExitoSimple("Fecha de fin actualizada")
+    } catch (error) {
+      Alerta.showError('Fecha no válida')
+    }
+
   }
-  
-  </script>
-  
-  <style scoped>
-  p{
-    color: white;
-  }
-  </style>
+}
+
+</script>
+
+<style scoped>
+p{
+  color: white;
+}
+</style>

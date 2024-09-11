@@ -9,3 +9,17 @@ export const formatearFecha = (fecha) => {
 
   return `${año}-${mes}-${día}`;
 };
+
+export function traducirDia(diaEnIngles) {
+  const dias = {
+    "MONDAY": "Lunes",
+    "TUESDAY": "Martes",
+    "WEDNESDAY": "Miércoles",
+    "THURSDAY": "Jueves",
+    "FRIDAY": "Viernes",
+    "SATURDAY": "Sábado",
+    "SUNDAY": "Domingo"
+  };
+
+  return dias[diaEnIngles] || diaEnIngles;
+}

@@ -15,23 +15,28 @@
 <script setup>
 import { ref } from 'vue';
 import {courseFormRules} from '../helpers/courseFormRules.js';
-import {useCodigoStore} from '../stores/codigoCursoStore.js'
+import { useCourseStore } from '../stores/course.js';
 import { useRouter } from 'vue-router';
+import Alerta from '@/helpers/Alerta';
  
 const router = useRouter();
 const formRef = ref(null)
-const codigoStore = useCodigoStore();
+const cursoStore = useCourseStore();
+
 
 const codigo= ref("");
-
-
 
 
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid){
-    codigoStore.guardarCodigo(codigo)
-    router.push({name:"course-professor"})
+    try {
+      await cursoStore.fetchCourseByCode(codigo.value)
+      router.push({name:"course-professor"})
+    } catch (error) {
+      Alerta.showError("Curso no encontrado")
+    }
+    
   }
 }
 
