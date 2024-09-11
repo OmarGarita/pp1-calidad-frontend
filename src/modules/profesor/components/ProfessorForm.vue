@@ -17,6 +17,8 @@
 import { ref } from 'vue';
 import {professorFormRules} from '../helpers/professorFormRules.js';
 import Alerta from "@/helpers/Alerta.js"
+import axiosClient from "@/axiosClient";
+
 
 
 const formRef = ref(null);
@@ -27,11 +29,16 @@ const nombre = ref("");
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid ){
-
-    //TODO
-
-    const texto = nombre.value;
-    Alerta.showExitoSimple(texto)
+    
+    const data = {
+      name: nombre.value 
+    }
+    try{
+      await axiosClient.post("/professors", data)
+      Alerta.showExitoSimple("Se ha agregado el profesor")
+    } catch(error){
+      Alerta.showError("")
+    }
   }
 }
 

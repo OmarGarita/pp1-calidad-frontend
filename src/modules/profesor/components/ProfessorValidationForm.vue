@@ -16,12 +16,13 @@
 <script setup>
 import { ref } from 'vue';
 import {professorFormRules} from '../helpers/professorFormRules.js';
-import {useNombreStore} from '../stores/nombreProfesorStore.js'
+import { useProfesorStore } from '../stores/profesor';
 import { useRouter } from 'vue-router';
+import Alerta from '@/helpers/Alerta';
  
+const profesorStore = useProfesorStore();
 const router = useRouter();
-const formRef = ref(null)
-const nombreStore = useNombreStore();
+const formRef = ref(null);
 
 const nombre= ref("");
 
@@ -29,11 +30,13 @@ const nombre= ref("");
 const onSubmit = async () =>{
   const {valid} = await formRef.value.validate();
   if(valid){
-
-    //TODO
-    
-    nombreStore.guardarNombre(nombre)
-    router.push({name:"professor-schedule"})
+    try{
+      await profesorStore.fetchProfessorByName(nombre.value)
+      
+      router.push({name:"professor-schedule"})
+    } catch(error){
+      Alerta.showError("No se encontro al profesor")
+    }
     
   }
 }

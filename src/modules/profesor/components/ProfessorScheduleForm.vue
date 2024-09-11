@@ -67,56 +67,70 @@
       <VBtn color="#40A578" type="submit"> <p class="text-subtitle-1">Registrar</p></VBtn>
     </VForm>
   </VSheet>
-  </template>
+</template>
   
-  <script setup>
-  import { ref } from 'vue';
-  import {professorFormRules} from '../helpers/professorFormRules.js';
-  import {useNombreStore} from '../stores/nombreProfesorStore.js'
-  import {items} from '../helpers/professorFormItems.js'
-  import { compararHoras } from "../helpers/Formato"
-  import Alerta from "@/helpers/Alerta.js"
-  
-  const formRef = ref(null);
-  const menu1 = ref(false);
-  const menu2= ref(false);
-  const nombreStore = useNombreStore();
-  
-  //Modelos de las entradas de cada entrada del formulario
-  const diaConsulta = ref(items.dias[0]);
-  const horaInicio = ref("");
-  const horaFin = ref("");
-  const cantCitas = ref(0);
-  
-  
-  //Regla para evitar que la hora de fin sea menor a la hora de inicio
-  const horaFinRules=  [
-    
-    () => {
-      if (compararHoras(horaFin.value, horaInicio.value)){
-        return true
-      } 
-  
-      return 'Debe ingresar una hora válida'
-    },
-  ]
-  
-  
-  const onSubmit = async () =>{
-    const {valid} = await formRef.value.validate();
-    if(valid ){
-      
-      //TODO
+<script setup>
+import { ref } from 'vue';
+import {professorFormRules} from '../helpers/professorFormRules.js';
+import { useProfesorStore } from '../stores/profesor';
+import {items} from '../helpers/professorFormItems.js'
+import { compararHoras } from "../helpers/Formato"
+import Alerta from "@/helpers/Alerta.js"
 
-      const texto = nombreStore.nombre.value + " " + diaConsulta.value + " " + horaInicio.value + " " + horaFin.value + " " + cantCitas.value
-      Alerta.showExitoSimple(texto)
+const formRef = ref(null);
+const menu1 = ref(false);
+const menu2= ref(false);
+const profesorStore = useProfesorStore();
+
+
+//Modelos de las entradas de cada entrada del formulario
+const diaConsulta = ref(items.dias[0]);
+const horaInicio = ref("");
+const horaFin = ref("");
+const cantCitas = ref(0);
+
+
+//Regla para evitar que la hora de fin sea menor a la hora de inicio
+const horaFinRules=  [
+  
+  () => {
+    if (compararHoras(horaFin.value, horaInicio.value)){
+      return true
+    } 
+
+    return 'Debe ingresar una hora válida'
+  },
+]
+
+
+
+const onSubmit = async () =>{
+  const {valid} = await formRef.value.validate();
+  if(valid ){
+
+    const data = {
+      dayOfWeek: diaConsulta.value,
+      startTime: horaInicio.value,
+      endTime: horaFin.value,
+      availableSlots: cantCitas.value
     }
+    
+    try {
+      await profesorStore.addConsultationSchedule(data)
+      Alerta.showExitoSimple("Se ha agregado el horario de consulta")
+    } catch (error) {
+      Alerta.showError("")
+    }
+      
+      
+
   }
-  
-  </script>
-  
-  <style scoped>
-  p{
-    color: white;
-  }
-  </style>
+}
+
+</script>
+
+<style scoped>
+p{
+  color: white;
+}
+</style>
