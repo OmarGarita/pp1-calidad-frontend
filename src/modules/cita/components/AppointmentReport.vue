@@ -30,7 +30,7 @@
         <VCol>
           <VSelect
             v-model="filtros.dia"
-            :items="dias"
+            :items="items.dias"
             label="Dia"
             outlined
             clearable
@@ -47,17 +47,18 @@
         </VCol>
       </VRow>
       <VBtn type="submit" color="primary">Aplicar Filtros</VBtn>
+      <VBtn @click="onReset" class="ma-2" color="primary">Limpiar Filtros</VBtn>
     </VForm>
 
     <!-- Tabla de reportes -->
     <VDataTable
       :headers="headers"
-      :items="reportesFiltrados"
+      :items="reportes"
       :search="busqueda"
       :items-per-page="5"
       class="mt-4"
     >
-      <!-- Template para renderizar las filas -->
+     
       <template v-slot:item.curso="{ item }">
         {{ item.curso }}
       </template>
@@ -79,27 +80,24 @@
 
 <script setup>
 import { ref } from 'vue';
-
+import { items } from '../helpers/apointmentReportItems';
 // Variables reactivas para los filtros
 const filtros = ref({
-  carne: '',
+  carne: null,
   curso: null,
   profesor: null,
   dia: null,
-  hora: '',
+  hora: null,
 });
 
-const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
-
-// Reportes originales de citas asignadas (simulado)
+//TODO: Obtener los reportes desde el api
+// Ejemplo de reportes
 const reportes = ref([
   { curso: 'Matemáticas', profesor: 'Dr. Juan Pérez', dia: 'Lunes', hora: '10:00' },
   { curso: 'Física', profesor: 'Dra. María García', dia: 'Martes', hora: '12:00' },
   { curso: 'Química', profesor: 'Dr. Carlos López', dia: 'Jueves', hora: '09:00' },
 ]);
 
-// Reportes filtrados según los filtros aplicados
-const reportesFiltrados = ref([...reportes.value]);
 
 // Columnas de la tabla
 const headers = ref([
@@ -112,16 +110,13 @@ const headers = ref([
 
 // Buscar reportes con filtros aplicados
 const aplicarFiltros = () => {
-  reportesFiltrados.value = reportes.value.filter((reporte) => {
-    return (
-      (!filtros.value.carne || reporte.carne?.includes(filtros.value.carne)) &&
-      (!filtros.value.curso || reporte.curso === filtros.value.curso) &&
-      (!filtros.value.profesor || reporte.profesor === filtros.value.profesor) &&
-      (!filtros.value.dia || reporte.dia === filtros.value.dia) &&
-      (!filtros.value.hora || reporte.hora === filtros.value.hora) &&
-      (!filtros.value.tipo || reporte.tipo === filtros.value.tipo)
-    );
-  });
+  //TODO
+};
+
+
+const onReset = () => {
+
+  //TODO
 };
 </script>
 

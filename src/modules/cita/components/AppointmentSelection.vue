@@ -77,19 +77,21 @@
 
 <script setup>
 import Alerta from '@/helpers/Alerta';
-import { useCitaStore } from '../stores/citaStore';
+import { useAppointmentStore } from '../stores/cita.js';
 import { ref } from 'vue';
 
 //Stores
-const citaStore = useCitaStore();
+const citaStore = useAppointmentStore();
 
 // Variables reactivas
 const cursos = ref([]);
 const dialog = ref(false);
 const profesorSeleccionado = ref(null);
 const citaActual = ref({});
-let indiceCita = 0;
+let indiceCita = 0
 
+
+//TODO: Obtener los cursos del estudiante
 //cursos de ejemplo
 cursos.value = [
   {
@@ -207,6 +209,9 @@ const formatTime = (time) => {
 
 // Abrir el diálogo con la primera cita disponible
 const abrirDialogo = (profesor) => {
+  
+
+  //ejemplo con la lista de prueba
   profesorSeleccionado.value = profesor;
   indiceCita = 0;
   if (profesor.schedules && profesor.schedules.length > 0) {
@@ -215,16 +220,22 @@ const abrirDialogo = (profesor) => {
   } else {
     Alerta.showWarning("Citas agotadas","No hay citas disponibles.");
   }
+  
+  //TODO
+
+
 };
 
 // Aceptar la cita
 const aceptarCita = () => {
-  Alerta.showExito(`Cita aceptada para el ${citaActual.value.dayOfWeek} a las ${formatTime(citaActual.value.startTime)}`);
+
+  //TODO
+
   dialog.value = false;
 };
 
-// Rechazar la cita y mostrar la siguiente
 const rechazarCita = () => {
+  //ejemplo con la lista de prueba
   indiceCita++;
   if (indiceCita < profesorSeleccionado.value.schedules.length) {
     citaActual.value = profesorSeleccionado.value.schedules[indiceCita];
@@ -232,6 +243,10 @@ const rechazarCita = () => {
     Alerta.showWarning("Citas agotadas","No hay más citas disponibles.");
     dialog.value = false;
   }
+
+
+  //TODO
+
 };
 
 </script>
