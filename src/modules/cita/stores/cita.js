@@ -5,17 +5,11 @@ import { formatData } from "../helpers/formato";
 
 export const useAppointmentStore = defineStore("appointment", () => {
   const currentStudent = ref(null);
+  const reports = ref([]);
 
   const setCurrentStudent = (student) => {
     currentStudent.value = student;
   };
-
-  return {
-    currentStudent,
-    setCurrentStudent,
-  };
-
-  const reports = ref([])
 
   async function getAppointmentReports(filtros) {
     const response = await axiosClient.get("/appointments/results", {
@@ -28,7 +22,6 @@ export const useAppointmentStore = defineStore("appointment", () => {
   return {
     currentStudent,
     setCurrentStudent,
-    saveNextAppointment,
     getAppointmentReports,
     reports,
   };
