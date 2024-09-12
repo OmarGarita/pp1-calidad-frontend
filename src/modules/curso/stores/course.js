@@ -40,9 +40,7 @@ export const useCourseStore = defineStore("course", () => {
     const response = await axiosClient.get("/courses/results", {
       params: filtros,
     });
-    if (response.data.length === 0) {
-      throw new Error("Reports not found");
-    }
+    
     reports.value = response.data;
     return reports.value;
   }
