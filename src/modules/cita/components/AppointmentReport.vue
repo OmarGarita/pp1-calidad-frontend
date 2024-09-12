@@ -5,14 +5,14 @@
       <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.carne"
+            v-model="filtros.studentIdCard"
             label="Carné del Estudiante"
             outlined
           ></VTextField>
         </VCol>
         <VCol>
           <VTextField
-            v-model="filtros.curso"
+            v-model="filtros.courseName"
             label="Curso"
             outlined
           ></VTextField>
@@ -21,31 +21,23 @@
       <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.hora"
-            label="Hora"
-            outlined
-            type="time"
-          ></VTextField>
-        </VCol>
-        <VCol>
-          <VSelect
-            v-model="filtros.dia"
-            :items="items.dias"
+            v-model="filtros.startDateTime"
+        
             label="Dia"
             outlined
             clearable
-          ></VSelect>
+            type="datetime-local"
+          ></VTextField>
         </VCol>
-      </VRow>
-      <VRow>
         <VCol>
           <VTextField
-            v-model="filtros.profesor"
+            v-model="filtros.professorName"
             label="Profesor"
             outlined
           ></VTextField>
         </VCol>
       </VRow>
+
       <VBtn type="submit" color="primary">Aplicar Filtros</VBtn>
       <VBtn @click="onReset" class="ma-2" color="primary">Limpiar Filtros</VBtn>
     </VForm>
@@ -79,24 +71,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { items } from '../helpers/apointmentReportItems';
+import { ref, watch, onMounted } from 'vue';
+
+import { useAppointmentStore } from '../stores/cita';
+
+const citaStore = useAppointmentStore();
+
 // Variables reactivas para los filtros
 const filtros = ref({
-  carne: null,
-  curso: null,
-  profesor: null,
-  dia: null,
-  hora: null,
+  studentIdCard: null,
+  courseName: null,
+  professorName: null,
+  startDateTime: null,
 });
+
 
 //TODO: Obtener los reportes desde el api
 // Ejemplo de reportes
-const reportes = ref([
-  { curso: 'Matemáticas', profesor: 'Dr. Juan Pérez', dia: 'Lunes', hora: '10:00' },
-  { curso: 'Física', profesor: 'Dra. María García', dia: 'Martes', hora: '12:00' },
-  { curso: 'Química', profesor: 'Dr. Carlos López', dia: 'Jueves', hora: '09:00' },
-]);
+const reportes = ref(citaStore.reports);
 
 
 // Columnas de la tabla
@@ -108,16 +100,42 @@ const headers = ref([
   { title: 'Hora', key: 'hora' }
 ]);
 
+
 // Buscar reportes con filtros aplicados
-const aplicarFiltros = () => {
-  //TODO
+const aplicarFiltros = async () => {
+  try{
+    await citaStore.getAppointmentReports(filtros.value)
+  } catch(error){
+    console.log("No hay reportes")
+  }
 };
 
 
-const onReset = () => {
+const onReset = async () => {
+  filtros.value = {
+    idCard: null,
+    courseName: null,
+    attemptCount: null,
+    starRating: null,
+    campus: null,
+  }
 
-  //TODO
+  try{
+    await citaStore.getAppointmentReports(filtros.value)
+  } catch(error){
+    console.log("No hay reportes")
+  }
 };
+
+watch(()=>citaStore.reports, (newValue) =>{
+  
+  reportes.value = newValue;
+  
+})
+
+onMounted(()=>{
+  citaStore.getAppointmentReports(filtros.value)
+})
 </script>
 
 <style scoped>
