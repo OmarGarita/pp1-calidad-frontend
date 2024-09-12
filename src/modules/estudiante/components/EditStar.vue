@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch, defineEmits } from "vue";
+import { ref, watch, defineEmits } from "vue";
 import { useStudentStore } from '../stores/student';
 import Alerta from "@/helpers/Alerta";
 

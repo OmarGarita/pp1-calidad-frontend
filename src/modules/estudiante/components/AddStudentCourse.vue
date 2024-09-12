@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch, defineEmits, computed } from "vue";
+import { ref, watch, defineEmits, computed } from "vue";
 import { studentFormRules } from "../helpers/studentFormRules.js";
 import { useStudentStore } from '../stores/student';
 import { useCourseStore } from "@/modules/curso/stores/course";
