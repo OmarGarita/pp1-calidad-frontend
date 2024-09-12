@@ -4,14 +4,19 @@ import axiosClient from "@/axiosClient";
 import { formatData } from "../helpers/formato";
 
 export const useAppointmentStore = defineStore("appointment", () => {
+
   const appointments = ref([]);
-  const nextAppointment = ref({});
   const reports = ref([])
+  const currentStudent = ref(null);
 
   // Guardar la próxima cita en el estado
   function saveNextAppointment(appointment) {
     nextAppointment.value = appointment;
   }
+  
+  const setCurrentStudent = (student) => {
+    currentStudent.value = student;
+  };
 
   // Obtener la próxima cita disponible
   async function fetchNextAppointment(studentId, courseId, lastAppointmentId = null) {
@@ -57,9 +62,12 @@ export const useAppointmentStore = defineStore("appointment", () => {
   return {
     appointments,
     nextAppointment,
+    currentStudent,
+    setCurrentStudent,
     saveNextAppointment,
     getAppointmentReports,
     fetchNextAppointment,
     acceptAppointment,
+
   };
 });
