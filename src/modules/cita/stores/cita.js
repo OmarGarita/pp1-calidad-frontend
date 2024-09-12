@@ -5,7 +5,6 @@ import { formatData } from "../helpers/formato";
 
 export const useAppointmentStore = defineStore("appointment", () => {
 
-  const appointments = ref([]);
   const currentStudent = ref(null);
   const reports = ref([]);
 
@@ -20,11 +19,8 @@ export const useAppointmentStore = defineStore("appointment", () => {
     reports.value = formatData(response.data);
     return reports.value;
   }
-
   
-
   return {
-    appointments,
     currentStudent,
     setCurrentStudent,
     getAppointmentReports,
