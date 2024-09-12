@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import axiosClient from "@/axiosClient";
+import { formatData } from "../helpers/formato";
 
 export const useAppointmentStore = defineStore("appointment", () => {
   const appointments = ref([]);
   const nextAppointment = ref({});
+  const reports = ref([])
 
   // Guardar la próxima cita en el estado
   function saveNextAppointment(appointment) {
@@ -23,6 +25,14 @@ export const useAppointmentStore = defineStore("appointment", () => {
     const appointment = response.data;
     saveNextAppointment(appointment);
     return appointment;
+  }
+
+  async function getAppointmentReports(filtros) {
+    const response = await axiosClient.get("/appointments/results", {
+      params: filtros,
+    });
+    reports.value = formatData(response.data);
+    return reports.value;
   }
 
   // Aceptar una cita
@@ -48,6 +58,7 @@ export const useAppointmentStore = defineStore("appointment", () => {
     appointments,
     nextAppointment,
     saveNextAppointment,
+    getAppointmentReports,
     fetchNextAppointment,
     acceptAppointment,
   };
