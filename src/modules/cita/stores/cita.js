@@ -61,7 +61,6 @@ export const useAppointmentStore = defineStore("appointment", () => {
 
   return {
     appointments,
-    nextAppointment,
     currentStudent,
     setCurrentStudent,
     saveNextAppointment,
