@@ -21,17 +21,6 @@ export const items = {
       title: "Viernes", 
       value: "FRIDAY"
     },
-    /** 
-    {
-      title: "Sabado", 
-      value: "SATURDAY"
-    },
-    {
-      title: "Domingo", 
-      value: "SUNDAY"
-    },
-    */
-    
   ]
     
 }
