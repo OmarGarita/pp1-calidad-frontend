@@ -16,7 +16,6 @@
         :active="menu1"
         :focus="menu1"
         label="Hora de inicio"
-        :rules="horaInicioRules"
         prepend-icon="mdi-clock-time-four-outline"
       >
         <VMenu
@@ -84,7 +83,7 @@ const profesorStore = useProfesorStore();
 
 
 //Modelos de las entradas de cada entrada del formulario
-const diaConsulta = ref(items.dias[0]);
+const diaConsulta = ref(null);
 const horaInicio = ref("");
 const horaFin = ref("");
 const cantCitas = ref(0);

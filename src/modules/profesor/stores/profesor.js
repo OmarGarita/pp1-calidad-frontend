@@ -30,12 +30,12 @@ export const useProfesorStore = defineStore("professor", () => {
 
   // Añadir un horario de consulta a un profesor
   async function addConsultationSchedule(addScheduleReq) {
-    console.log(professor.value.id)
-    const response = await axiosClient.post(`/professors/${professor.value.id}/schedules`, addScheduleReq);
-    console.log(response)
+    console.log(addScheduleReq);
+    const response = await axiosClient.post(`/professors/${professor.value.id}/schedules`, 
+      addScheduleReq);
     const createdSchedule = response.data;
         
-    if (response.status <400) {
+    if (response.status < 400) {
       professor.value.schedules.push(createdSchedule);
     }
     return createdSchedule;
