@@ -17,7 +17,7 @@
           <ModuleOption titulo="Profesores" subtitulo="Gestiona información de profesores" icono="src/assets/modprofesor.svg" btntitle="Acceder" href="professor-module"/>
         </VCol>
         <VCol>
-          <ModuleOption titulo="Cursos" subtitulo="Explora los cursos y sus horarios de consulta" icono="src/assets/modcursos.svg" btntitle="Ver cursos" href="course-module"/>
+          <ModuleOption titulo="Cursos" subtitulo="Gestiona los cursos y sus profesores asignados" icono="src/assets/modcursos.svg" btntitle="Ver cursos" href="course-module"/>
         </VCol>
       </VRow>
       

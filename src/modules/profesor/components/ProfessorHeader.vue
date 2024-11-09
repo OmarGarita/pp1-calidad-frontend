@@ -26,7 +26,7 @@ header{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #3C2A21, #E5E5CB);
+  background: linear-gradient(to right, #4b3b31, #8d775f);
   height: 250px;
 }
 </style>

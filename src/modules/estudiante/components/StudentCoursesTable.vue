@@ -29,7 +29,7 @@
         <td class="text-center">{{ item.attemptCount }}</td>
         <td class="text-center">{{ item.starRating }}</td>
         <td class="text-center">
-          <VBtn @click="openEditDialog(item.id)" color="#40A578" density="comfortable" icon="mdi-pencil-outline"></VBtn> 
+          <VBtn @click="openEditDialog(item.id)" color="teal-darken-3" density="comfortable" icon="mdi-pencil-outline"></VBtn> 
           <EditStar
           :model="dialog" 
           :codigoCurso="selectedCursoId" 

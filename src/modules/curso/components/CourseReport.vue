@@ -64,8 +64,8 @@
         <!-- Título del curso -->
         <VExpansionPanelTitle>
           Codigo: {{ curso.code }} - Nombre: {{ curso.name }}
-          <VChip class="ml-2" color="green" outlined>Inicio: {{ curso.semester.startDate }}</VChip>
-          <VChip class="ml-2" color="red" outlined>Fin: {{ curso.semester.endDate }}</VChip>
+          <VChip class="ml-2" color="green" outlined><p class="inicio">Inicio: {{ curso.semester.startDate }}</p></VChip>
+          <VChip class="ml-2" color="red" outlined> <p class="fin">Fin: {{ curso.semester.endDate }} </p></VChip>
         </VExpansionPanelTitle>
 
         <!-- Profesores y días de consulta al expandir -->
@@ -177,5 +177,13 @@ onMounted(()=>{
 h2 {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.inicio{
+  color: #006400;
+}
+
+.fin{
+  color:  rgb(139, 0, 0);
 }
 </style>

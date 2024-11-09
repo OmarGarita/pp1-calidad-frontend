@@ -28,7 +28,7 @@
         <VBtn text="Cancelar" variant="plain" @click="closeDialog"></VBtn>
 
         <VBtn
-          color="#40A578"
+          color="teal-darken-3"
           text="Agregar"
           variant="tonal"
           @click="onAdd"

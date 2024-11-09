@@ -9,7 +9,7 @@
         type="number"
         class="custom-text-field"
       ></VTextField>
-      <VBtn color="#40A578" type="submit">
+      <VBtn color="teal-darken-3" type="submit">
         <p class="text-subtitle-1">Ingresar</p>
       </VBtn>
     </VForm>

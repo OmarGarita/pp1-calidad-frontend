@@ -7,7 +7,7 @@
             :rules="courseFormRules.codigo"
             label="Codigo"
       ></VTextField>
-      <VBtn color="#40A578" type="submit"> <p class="text-subtitle-1">Ingresar</p></VBtn>
+      <VBtn color="teal-darken-3" type="submit"> <p class="text-subtitle-1">Ingresar</p></VBtn>
     </VForm>
   </VSheet>
 </template>

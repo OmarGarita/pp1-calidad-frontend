@@ -4,7 +4,7 @@
       <VTextField
         v-model="nombre"
         :rules="studentFormRules.nombre"
-        label="Nombre"
+        label="Nombre completo"
       ></VTextField>
       <VTextField
         v-model="carne"
@@ -19,7 +19,7 @@
         label="Sede"
       ></VTextField>
 
-      <VBtn color="#40A578" type="submit">
+      <VBtn color="teal-darken-3" type="submit">
         <p class="text-subtitle-1">Registrar</p></VBtn
       >
     </VForm>

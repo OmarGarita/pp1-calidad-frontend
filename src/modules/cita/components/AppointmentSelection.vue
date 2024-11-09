@@ -134,6 +134,7 @@ const fetchAppointment = async (from = null) => {
     const response = await axiosClient.get("/appointments/next", { params });
     currentAppointment.value = response.data;
   } catch (error) {
+    dialog.value = false;
     Alerta.showError("Error al obtener las citas del curso");
   }
 };
@@ -165,33 +166,37 @@ const acceptAppointment = async () => {
       `/appointments/${currentAppointment.value.id}/accept`
     );
     if (response.status === 200) {
+      dialog.value = false;
       Alerta.showExito(
         "Cita aceptada",
         "La cita ha sido aceptada exitosamente"
       );
       currentAppointment.value = null;
-      dialog.value = false;
+      
     } else {
+      dialog.value = false;
       Alerta.showError(
         "Error al aceptar la cita",
         "No se pudo aceptar la cita"
       );
     }
   } catch (error) {
-    Alerta.showError("Error al aceptar la cita", "No se pudo aceptar la cita");
     dialog.value = false;
+    Alerta.showError("Error al aceptar la cita", "No se pudo aceptar la cita");
   }
 };
 
 const rejectAppointment = async () => {
   try {
     await fetchAppointment(currentAppointment.value.end);
+    
   } catch (error) {
+    dialog.value = false;
     Alerta.showError(
       "Error al pasar a la siguiente cita",
       "No se pudo pasar a la siguiente cita"
     );
-    dialog.value = false;
+    
   }
 };
 

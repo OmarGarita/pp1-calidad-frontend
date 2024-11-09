@@ -10,7 +10,7 @@
             chips
           ></VSelect>
       
-      <VBtn color="#40A578" type="submit"> <p class="text-subtitle-1">Registrar</p></VBtn>
+      <VBtn color="teal-darken-3" type="submit"> <p class="text-subtitle-1">Registrar</p></VBtn>
     </VForm>
   </VSheet>
 </template>
